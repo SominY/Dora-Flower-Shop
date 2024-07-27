@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #FFCFE2; height: 8rem;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/img/logo.png" alt="Logo" width="120" height="120"
+                     class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse d-lg-flex" id="navbarSupportedContent" >
+                <ul class="navbar-nav col-lg-9 justify-content-lg-start">
+                    <li class="nav-item ml-5 mr-5">
+                        <a class="nav-link text-info active h5" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item mr-5">
+                        <a class="nav-link text-secondary h5" href="#">Flowers</a>
+                    </li>
+                    <li class="nav-item mr-5">
+                        <a class="nav-link text-secondary h5" href="#">Wedding</a>
+                    </li>
+                    <li class="nav-item dropdown mr-5">
+                        <a class="nav-link dropdown-toggle text-secondary h5" href="#" data-bs-toggle="dropdown" aria-expanded="false">Special Day</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Proposal</a></li>
+                            <li><a class="dropdown-item" href="#">Birth Day</a></li>
+                            <li><a class="dropdown-item" href="#">Promotion/Opening</a></li>
+                            <li><a class="dropdown-item" href="#">Celebrate</a></li>
+                            <li><a class="dropdown-item" href="#">Graduation</a></li>
+                            <li><a class="dropdown-item" href="#">Thanks</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary h5" href="#">Notice</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav col-lg-3 justify-content-end">
+                    <li><a class="nav-link text-dark mr-2" href="#">
+                        <i class="bi bi-person-fill text-dark mr-2"></i>Sign Up</a></li>
+                    <li><a class="nav-link text-dark mr-2" href="#">
+                        <i class="bi bi-box-arrow-in-right text-dark mr-2"></i>Login</a></li>
+                    <li><a class="nav-link text-dark" href="#">
+                        <i class="bi bi-bag-heart-fill text-dark mr-2"></i>Cart</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
