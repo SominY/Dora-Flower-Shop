@@ -46,7 +46,10 @@ class MemberServiceImplTest {
         Member savedMember = memberService.saveMember(member);
 
         // 로그로 저장된 Member 확인
+        // 로그로 저장된 Member 확인
         log.info("Saved Member: {}", savedMember);
+        assertNotNull(savedMember.getMemberId()); // ID가 null이 아닌지 확인
+        assertEquals("test@email.com", savedMember.getEmail());
 
     }
 

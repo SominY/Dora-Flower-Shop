@@ -1,6 +1,5 @@
 package com.doraflower.service;
 
-import com.doraflower.dto.MemberFormDTO;
 import com.doraflower.entity.Member;
 import com.doraflower.repository.MemberRepository;
 import jakarta.transaction.Transactional;
