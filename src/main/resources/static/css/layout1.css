@@ -1,17 +1,11 @@
-* {
-    box-sizing: border-box;
-}
-
 html {
     position: relative;
     min-height: 100%;
     margin: 0;
 }
-
 body {
     min-height: 100%;
 }
-
 .footer {
     position: absolute;
     left: 0;
@@ -20,9 +14,7 @@ body {
     width: 100%;
     padding: 15px 0;
     text-align: center;
-
 }
-
 .content{
     margin-bottom:100px;
     margin-top: 50px;

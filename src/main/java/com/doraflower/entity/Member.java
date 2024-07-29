@@ -4,6 +4,7 @@ import com.doraflower.constant.Role;
 import com.doraflower.dto.MemberFormDTO;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.processing.Pattern;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
@@ -20,13 +21,16 @@ public class Member {
     @Column(name="member_id")
     private Long memberId;
 
+    @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String address;
 
     @Enumerated(EnumType.STRING)
