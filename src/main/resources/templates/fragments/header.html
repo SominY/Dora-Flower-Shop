@@ -1,38 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
 
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #FFCFE2; height: 8rem;">
+
+    <nav class="navbar navbar-expand-lg" style="background-color: #FFCFE2; height: 8rem;">
+
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/img/logo.png" alt="Logo" width="120" height="120"
+
+            <a class="navbar-brand ms-3" href="#">
+                <img src="/img/logo.png" alt="Logo" width="100" height="100"
                      class="d-inline-block align-text-top">
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    data-bs-target="#navbarScroll" aria-controls="navbarScroll"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse d-lg-flex" id="navbarSupportedContent" >
-                <ul class="navbar-nav col-lg-9 justify-content-lg-start">
-                    <li class="nav-item ml-5 mr-5">
-                        <a class="nav-link text-info active h5" aria-current="page" href="#">Home</a>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item fs-4 ms-3 me-4">
+                        <a class="nav-link active text-body-secondary fw-bold" aria-current="page" href="#">Home</a>
                     </li>
-                    <li class="nav-item mr-5">
-                        <a class="nav-link text-secondary h5" href="#">Flowers</a>
+
+                    <li class="nav-item fs-4 me-4">
+                        <a class="nav-link text-body-secondary fw-bold" href="#">Flowers</a>
                     </li>
-                    <li class="nav-item mr-5">
-                        <a class="nav-link text-secondary h5" href="#">Wedding</a>
+
+                    <li class="nav-item fs-4 me-4">
+                        <a class="nav-link text-body-secondary fw-bold" href="#">Wedding</a>
                     </li>
-                    <li class="nav-item dropdown mr-5">
-                        <a class="nav-link dropdown-toggle text-secondary h5" href="#" data-bs-toggle="dropdown" aria-expanded="false">Special Day</a>
+
+                    <li class="nav-item dropdown fs-4 me-4">
+                        <a class="nav-link dropdown-toggle text-body-secondary fw-bold" href="#" role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">Special Day</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Proposal</a></li>
                             <li><a class="dropdown-item" href="#">Birth Day</a></li>
@@ -42,24 +53,54 @@
                             <li><a class="dropdown-item" href="#">Thanks</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary h5" href="#">Notice</a>
+
+                    <li class="nav-item fs-4">
+                        <a class="nav-link text-body-secondary fw-bold" href="#">Notice</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav col-lg-3 justify-content-end">
-                    <li><a class="nav-link text-dark mr-2" href="#">
-                        <i class="bi bi-person-fill text-dark mr-2"></i>Sign Up</a></li>
-                    <li><a class="nav-link text-dark mr-2" href="#">
-                        <i class="bi bi-box-arrow-in-right text-dark mr-2"></i>Login</a></li>
-                    <li><a class="nav-link text-dark" href="#">
-                        <i class="bi bi-bag-heart-fill text-dark mr-2"></i>Cart</a></li>
-                </ul>
+            </div>
+
+            <div id="nav_item">
+                <div>
+                    <ul class="navbar-nav justify-content-end me-3">
+                        <li class="nav-item"
+                            sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <a class="nav-link text-muted" href="/admin/item/new"
+                               style="font-size: small;">✓ 상품등록</a>
+                        </li>
+                        <li class="nav-item"
+                            sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <a class="nav-link text-muted" href="/admin/items"
+                               style="font-size: small;">✓ 상품관리</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <ul class="navbar-nav justify-content-end me-3">
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link text-dark" href="/members/new">
+                            <i class="bi bi-person-fill text-dark me-1"></i>Sign Up</a></li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link text-dark" href="/members/login">
+                            <i class="bi bi-box-arrow-in-right text-dark me-2"></i>Login</a></li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link text-dark" href="/members/logout">
+                                <i class="bi bi-box-arrow-in-right text-dark me-2"></i>Logout</a></li>
+
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link text-dark" href="/cart">
+                            <i class="bi bi-bag-heart-fill text-dark me-1"></i>Cart</a></li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link text-dark" href="/orders">
+                                <i class="bi bi-clipboard2-heart-fill me-1"></i>Order</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 </div>
 
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

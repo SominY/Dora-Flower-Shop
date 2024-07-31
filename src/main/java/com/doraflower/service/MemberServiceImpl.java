@@ -39,6 +39,10 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
-        return null;
+        return User.builder()
+                .username(theMember.getEmail())
+                .password(theMember.getPassword())
+                .roles(theMember.getRole().toString())
+                .build();
     }
 }

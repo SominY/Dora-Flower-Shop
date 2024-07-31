@@ -48,4 +48,15 @@ public class MemberController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/login")
+    public String loginMember() {
+        return "/member/memberLoginForm";
+    }
+
+    @GetMapping("/login/error")
+    public String loginError(Model model) {
+        model.addAttribute("loginErrorMsg", "Please enter a valid email or password");
+        return "/member/memberLoginForm";
+    }
 }
