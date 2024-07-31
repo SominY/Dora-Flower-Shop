@@ -31,3 +31,7 @@
 - Lombok
 - Spring Security
 - Spring Boot DevTools
+- querydsl
+- thymeleaf-layout-dialect
+- validation
+- thymeleaf-extras-springsecurity6
