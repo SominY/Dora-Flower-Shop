@@ -33,11 +33,13 @@ public class MemberController {
                              BindingResult bindingResult,
                              Model model) {
 
+        // 유효성 오류시 실행할 메서드
         if (bindingResult.hasErrors()) {
             System.out.println("Binding results: " + bindingResult.toString());
             return "member/memberForm";
         }
 
+        // 이메일 중복 시 예외처리
         try {
             Member member = Member.createMember(memberFormDTO, passwordEncoder);
             memberService.saveMember(member);
@@ -46,6 +48,7 @@ public class MemberController {
             return "member/memberForm";
         }
 
+        // 성공 시 리다이렉트
         return "redirect:/";
     }
 

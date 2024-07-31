@@ -12,8 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.doraflower.constant.Role.ADMIN;
+import static com.doraflower.constant.Role.USER;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 @Transactional
@@ -46,7 +47,6 @@ class MemberServiceImplTest {
         Member savedMember = memberService.saveMember(member);
 
         // 로그로 저장된 Member 확인
-        // 로그로 저장된 Member 확인
         log.info("Saved Member: {}", savedMember);
         assertNotNull(savedMember.getMemberId()); // ID가 null이 아닌지 확인
         assertEquals("test@email.com", savedMember.getEmail());
@@ -57,11 +57,14 @@ class MemberServiceImplTest {
     @DisplayName("중복 회원 가입 테스트")
     public void saveDuplicateMember() {
 
-        Member member1 = new Member(null,"Dora", "test@email.com", "1234", "Daegu", null);
-        Member member2 = new Member(null,"Dora", "test@email.com", "1234", "Daegu", null);
+        // 객체 생성
+        Member member1 = new Member(null,"Dora", "test@email.com", "1234", "Daegu", ADMIN);
+        Member member2 = new Member(null,"Dora", "test@email.com", "1234", "Daegu", USER);
 
+        // 객체 저장
         memberService.saveMember(member1);
 
+        // 예외 처리
         IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             memberService.saveMember(member2);
         });
