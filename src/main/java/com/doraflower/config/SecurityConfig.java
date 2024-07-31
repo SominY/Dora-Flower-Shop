@@ -4,9 +4,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,9 +45,17 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                 configurer
                         .requestMatchers("/h2-console/**").permitAll() // H2 콘솔에 대한 접근 허용
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                         .anyRequest().authenticated() // 나머지 요청에 대해 인증 필요
 
+        );
+
+        // Custom AuthenticationEntryPoint 설정
+        http.exceptionHandling(exceptionHandling ->
+                exceptionHandling
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
         );
 
         // use HTTP Basic authentication

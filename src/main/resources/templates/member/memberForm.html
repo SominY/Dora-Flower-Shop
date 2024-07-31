@@ -48,7 +48,7 @@
                 <div class="col-12">
                     <label th:for="password" class="form-label">Password</label>
                     <input type="password" th:field="*{password}" class="form-control"
-                           placeholder="At least 8 characters" required>
+                           placeholder="8-16 characters including numbers" required>
                     <div th:if="${#fields.hasErrors('password')}"
                          th:errors="*{password}"
                          class="invalid-feedback">

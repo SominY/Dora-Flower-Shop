@@ -24,7 +24,7 @@ public class MemberFormDTO {
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Length(min=8, max=16, message = "Password must be 8-16 characters long")
+    @Length(min=8, max=16, message = "Enter a password between 8 and 16 characters, including numbers.")
     private String password;
 
     @NotBlank(message = "Address is required")
