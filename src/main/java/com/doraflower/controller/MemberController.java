@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -22,7 +24,12 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/new")
-    public String memberForm(Model model) {
+    public String memberForm(Model model, Principal principal) {
+
+        if (principal != null) {
+            // 로그인된 사용자가 접근 시 다른 페이지로 리디렉션
+            return "redirect:/";
+        }
 
         model.addAttribute("memberFormDTO", new MemberFormDTO());
         return "member/memberForm";
