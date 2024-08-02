@@ -7,9 +7,7 @@ import lombok.*;
 @Entity
 @Table(name = "item")
 @Builder
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Item extends BaseEntity {

@@ -33,6 +33,7 @@ class CartTest {
     @PersistenceContext
     EntityManager em;
 
+    // 회원 엔티티 생성
     public Member createMember() {
 
         MemberFormDTO memberFormDTO = MemberFormDTO.builder()
@@ -49,19 +50,22 @@ class CartTest {
     @DisplayName("장바구니 회원 엔티티 매핑 조회 테스트")
     public void findCartAndMemberTest() {
 
+        // 1. Member 객체 생성 및 저장
         Member member = createMember();
         memberRepository.save(member);
 
+        // 2. Cart 객체 생성 및 설정
         Cart cart = new Cart();
         cart.setMember(member);
         cartRepository.save(cart);
 
+        // 3. 영속성 컨텍스트 플러시 및 초기화
         em.flush();
         em.clear();
 
+        // 4. Cart 조회 및 검증
         Cart savedCart = cartRepository.findById(cart.getId())
                 .orElseThrow(EntityNotFoundException::new);
         assertEquals(savedCart.getMember().getMemberId(), member.getMemberId());
-
     }
 }
