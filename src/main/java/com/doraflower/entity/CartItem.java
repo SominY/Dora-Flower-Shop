@@ -6,7 +6,7 @@ import lombok.Data;
 @Entity
 @Table(name = "cart_item")
 @Data
-public class CartItem {
+public class CartItem extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
