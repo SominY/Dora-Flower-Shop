@@ -35,3 +35,4 @@
 - thymeleaf-layout-dialect
 - validation
 - thymeleaf-extras-springsecurity6
+- modelmapper
