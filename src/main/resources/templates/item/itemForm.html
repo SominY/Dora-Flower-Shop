@@ -1,16 +1,114 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+
 <head>
-    <meta charset="UTF-8">
+
+    <title>Register Item</title>
+
+    <style>
+        .fieldError {
+            color: darkseagreen;
+            font-weight: bold;
+            margin-left: 3px;
+            margin-bottom: 5px;
+        }
+    </style>
 
 </head>
 <body>
-
 <div layout:fragment="content">
-    <h1> 상품 등록 페이지 입니다.</h1>
+
+    <form role="form" method="post" enctype="multipart/form-data"
+          th:object="${itemFormDTO}" novalidate>
+
+        <i class="bi bi-pin-fill fs-1" style="color: #FFCFE2;"></i>
+        <h1 class="h3 mt-1 mb-3 fw-bold text-muted">Register Item</h1>
+        <hr>
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="d-flex flex-column flex-md-row py-md-3 align-items-center">
+            <select th:field="*{itemSellStatus}" class="form-select"
+                    aria-label="itemSellStatus" style="width: 200px;">
+                <option value="SELL">SELL</option>
+                <option value="SOLD_OUT">SOLD OUT</option>
+            </select>
+        </div>
+
+        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError"></p>
+        <div class="input-group mb-3 w-50">
+            <span class="input-group-text fw-bold" id="itemNm">Name</span>
+            <input type="text" th:field="*{itemNm}" class="form-control"
+                   placeholder="Enter Item Name"
+                   aria-describedby="itemNm">
+        </div>
+
+        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
+        <div class="input-group mb-3 w-50">
+            <span class="input-group-text fw-bold" id="itemPrice">Price</span>
+            <input type="number" th:field="*{price}" class="form-control"
+                   placeholder="Enter Item Price"
+                   aria-describedby="itemPrice">
+        </div>
+
+        <p th:if="${#fields.hasErrors('stockNum')}" th:errors="*{stockNum}" class="fieldError"></p>
+        <div class="input-group mb-3 w-50">
+            <span class="input-group-text fw-bold" id="stockNm">Stock Number</span>
+            <input type="number" th:field="*{stockNum}" class="form-control"
+                   placeholder="Enter Item Stock Number"
+                   aria-describedby="stockNm">
+        </div>
+
+        <div th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="fieldError"></div>
+        <div class="input-group mb-5 w-75">
+            <span class="input-group-text fw-bold" id="itemDetail">Item Detail</span>
+            <textarea class="form-control" aria-describedby="itemDetail"
+                      th:field="*{itemDetail}"></textarea>
+        </div>
+
+
+        <!-- 상품 등록하는 경우 -->
+        <div th:if="${#lists.isEmpty(itemFormDTO.itemImgDTOList)}">
+            <div class="form-group mb-3" th:each="num: ${#numbers.sequence(1,5)}">
+                <div class="input-group img-div w-75">
+                    <label class="input-group-text fw-bold"
+                           th:text="Item_0 + ${num}" for="inputGroupFile"></label>
+                    <input type="file" class="form-control" id="inputGroupFile"
+                           name="itemImgFile" style="color: gainsboro;">
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품 수정하는 경우-->
+        <div th:if="${not #lists.isEmpty(itemFormDTO.itemImgDTOList)}">
+            <div class="form-group" th:each="itemImgDTO, status: ${itemFormDTO.itemImgDTOList}">
+                <div class="custom-file img-div">
+                    <input type="file" class="custom-file-input" name="itemImgFile">
+                    <input type="hidden" name="itemImgIds" th:value="${itemImgDTO.id}">
+                    <label class="custom-file-label"
+                           th:text="${not #strings.isEmpty(itemImgDTO.oriImgName)} ?
+                           ${itemImgDTO.oriImgName} : 'Item Image' + ${status.index+1}"></label>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#strings.isEmpty(itemFormDTO.id)}" style="text-align: center">
+            <button th:formaction="@{/admin/item/new}" type="submit"
+                    class="btn btn-dark btn-lg mt-5">Register
+            </button>
+        </div>
+        <div th:unless="${#strings.isEmpty(itemFormDTO.id)}" style="text-align: center">
+            <button th:formaction="@{'/admin/item/' + ${itemFormDTO.id} }"
+                    type="submit" class="btn btn-primary btn-lg mt-5">Update
+            </button>
+        </div>
+
+    </form>
+
 </div>
 
+<script th:inline="javascript" src="/js/itemForm.js"></script>
 </body>
 </html>
