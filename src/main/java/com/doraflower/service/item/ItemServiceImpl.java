@@ -25,7 +25,8 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public Long saveItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList) throws Exception {
+    public Long saveItem(ItemFormDTO itemFormDTO, List<MultipartFile> itemImgFileList)
+            throws Exception {
 
         //상품 등록
         Item item = itemFormDTO.createItem();

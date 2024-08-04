@@ -75,7 +75,7 @@
                 <div class="input-group img-div w-75">
                     <label class="input-group-text fw-bold"
                            th:text="Item_0 + ${num}" for="inputGroupFile"></label>
-                    <input type="file" class="form-control" id="inputGroupFile"
+                    <input type="file" class="form-control custom-file-input" id="inputGroupFile"
                            name="itemImgFile" style="color: gainsboro;">
                 </div>
             </div>
@@ -85,11 +85,11 @@
         <div th:if="${not #lists.isEmpty(itemFormDTO.itemImgDTOList)}">
             <div class="form-group" th:each="itemImgDTO, status: ${itemFormDTO.itemImgDTOList}">
                 <div class="custom-file img-div">
-                    <input type="file" class="custom-file-input" name="itemImgFile">
-                    <input type="hidden" name="itemImgIds" th:value="${itemImgDTO.id}">
-                    <label class="custom-file-label"
+                    <label class="input-group-text fw-bold custom-file-label"
                            th:text="${not #strings.isEmpty(itemImgDTO.oriImgName)} ?
                            ${itemImgDTO.oriImgName} : 'Item Image' + ${status.index+1}"></label>
+                    <input type="file" class="form-control custom-file-input" name="itemImgFile">
+                    <input type="hidden" name="itemImgIds" th:value="${itemImgDTO.id}">
                 </div>
             </div>
         </div>
