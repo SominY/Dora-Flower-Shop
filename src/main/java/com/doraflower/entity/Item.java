@@ -1,6 +1,7 @@
 package com.doraflower.entity;
 
 import com.doraflower.constant.ItemSellStatus;
+import com.doraflower.dto.ItemFormDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,4 +34,13 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; // 상품 판매 상태
 
+    public void updateItem(ItemFormDTO itemFormDTO) {
+
+        this.itemNm = itemFormDTO.getItemNm();
+        this.price = itemFormDTO.getPrice();
+        this.stockNum = itemFormDTO.getStockNum();
+        this.itemDetail = itemFormDTO.getItemDetail();
+        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+
+    }
 }

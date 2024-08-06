@@ -19,12 +19,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
-
-    // 생성자 주입을 사용하여 의존성 주입
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
-    }
+//    private final CustomUserDetailsService customUserDetailsService;
+//
+//    // 생성자 주입을 사용하여 의존성 주입
+//    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+//        this.customUserDetailsService = customUserDetailsService;
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,10 +58,10 @@ public class SecurityConfig {
         );
 
         http.rememberMe(rememberMe -> rememberMe
-                .rememberMeParameter("rememberMe") // default: remember-me, checkbox 등의 이름과 맞춰야함
+                .rememberMeParameter("remember-me") // default: remember-me, checkbox 등의 이름과 맞춰야함
                 .tokenValiditySeconds(3600) // 쿠키의 만료시간 설정(초), default: 14일
-                .alwaysRemember(false) // 사용자가 체크박스를 활성화하지 않아도 항상 실행, default: false
-                .userDetailsService(customUserDetailsService)); // 기능을 사용할 때 사용자 정보가 필요함. 반드시 이 설정 필요함.
+                .alwaysRemember(false)); // 사용자가 체크박스를 활성화하지 않아도 항상 실행, default: false
+//                .userDetailsService(customUserDetailsService)); // 기능을 사용할 때 사용자 정보가 필요함. 반드시 이 설정 필요함.
 
 
         // Custom AuthenticationEntryPoint 설정

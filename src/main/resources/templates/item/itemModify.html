@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
-
 <head>
-
-    <title>Register Item</title>
+    <meta charset="UTF-8">
+    <title>Modify Item</title>
 
     <style>
         .fieldError {
@@ -18,6 +17,7 @@
 
 </head>
 <body>
+
 <div layout:fragment="content">
 
     <form role="form" method="post" enctype="multipart/form-data"
@@ -68,29 +68,28 @@
                       th:field="*{itemDetail}"></textarea>
         </div>
 
-
-        <!-- 상품 등록하는 경우 -->
-        <div th:if="${#lists.isEmpty(itemFormDTO.itemImgDTOList)}">
-            <div class="form-group mb-3" th:each="num: ${#numbers.sequence(1,5)}">
-                <div class="input-group img-div w-75">
-                    <label class="input-group-text custom-file-label fw-bold"
-                           th:text="Item_0 + ${num}"
-                           for="inputGroupFile_${num}"></label>
-                    <input type="file" class="form-control custom-file-input" id="inputGroupFile_${num}"
+        <!-- 상품 수정하는 경우-->
+        <div th:if="${not #lists.isEmpty(itemFormDTO.itemImgDTOList)}">
+            <div class="form-group mb-3" th:each="itemImgDTO, status: ${itemFormDTO.itemImgDTOList}">
+                <div class="input-group img-div">
+                    <label class="input-group-text custom-file-label"
+                           for="inputGroupFile_${status.index}"
+                           th:text="${not #strings.isEmpty(itemImgDTO.oriImgName)} ?
+                           ${itemImgDTO.oriImgName} : 'Item Image' + ${status.index+1}"></label>
+                    <input type="file" class="form-control custom-file-input"
+                           id="inputGroupFile_${status.index}"
                            name="itemImgFiles" style="color: gainsboro;">
+                    <input type="hidden" name="itemImgIds" th:value="${itemImgDTO.id}">
                 </div>
             </div>
         </div>
 
-
-        <div th:if="${#strings.isEmpty(itemFormDTO.id)}" style="text-align: center">
-            <button th:formaction="@{/admin/item/new}" type="submit"
-                    class="btn btn-dark btn-lg mt-5">Register
+        <div th:unless="${#strings.isEmpty(itemFormDTO.id)}" style="text-align: center">
+            <button th:formaction="@{'/admin/item/' + ${itemFormDTO.id} }"
+                    type="submit" class="btn btn-dark btn-lg mt-5">Update
             </button>
         </div>
-
     </form>
-
 </div>
 
 <script th:inline="javascript" src="/js/itemForm.js"></script>

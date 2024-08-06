@@ -37,7 +37,6 @@ public class ItemFormDTO {
 
     private ItemSellStatus itemSellStatus;
 
-    // 상품 저장 후 수정할 때 상품 이미지 정보를 저장하는 리스트
     private List<ItemImgDTO> itemImgDTOList = new ArrayList<>();
 
     // 수정 시에 아이디를 담아둘 용도
