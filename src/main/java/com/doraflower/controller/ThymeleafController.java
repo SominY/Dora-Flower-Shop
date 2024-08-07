@@ -10,6 +10,6 @@ public class ThymeleafController {
 
     @GetMapping("/ex")
     public String thymeleafExample() {
-        return "home";
+        return "main";
     }
 }

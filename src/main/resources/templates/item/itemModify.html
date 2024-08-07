@@ -2,11 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+
 <head>
     <meta charset="UTF-8">
     <title>Modify Item</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript" src="/js/itemForm.js"></script>
+
     <style>
+        form {
+            padding: 50px 200px;
+        }
+
         .fieldError {
             color: darkseagreen;
             font-weight: bold;
@@ -72,12 +80,12 @@
         <div th:if="${not #lists.isEmpty(itemFormDTO.itemImgDTOList)}">
             <div class="form-group mb-3" th:each="itemImgDTO, status: ${itemFormDTO.itemImgDTOList}">
                 <div class="input-group img-div">
-                    <label class="input-group-text custom-file-label"
-                           for="inputGroupFile_${status.index}"
+                    <label class="input-group-text"
+                           for="inputGroupFile"
                            th:text="${not #strings.isEmpty(itemImgDTO.oriImgName)} ?
                            ${itemImgDTO.oriImgName} : 'Item Image' + ${status.index+1}"></label>
-                    <input type="file" class="form-control custom-file-input"
-                           id="inputGroupFile_${status.index}"
+                    <input type="file" class="form-control"
+                           id="inputGroupFile"
                            name="itemImgFiles" style="color: gainsboro;">
                     <input type="hidden" name="itemImgIds" th:value="${itemImgDTO.id}">
                 </div>
@@ -92,6 +100,6 @@
     </form>
 </div>
 
-<script th:inline="javascript" src="/js/itemForm.js"></script>
+
 </body>
 </html>

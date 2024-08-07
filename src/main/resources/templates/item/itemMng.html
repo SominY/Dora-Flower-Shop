@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+
+    <title>Item Management</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/itemMng.js"></script>
+
+    <style>
+        form {
+            padding: 50px 200px;
+        }
+
+        .form-inline {
+            display: flex;
+        }
+
+        select {
+            margin-right: 3px;
+        }
+
+        th,td {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <form th:action="@{'/admin/items/' + ${items.number}}"
+          role="form" method="get" th:object="${items}">
+
+        <i class="bi bi-clipboard-check-fill fs-1 ms-2" style="color: #FFCFE2;"></i>
+        <h2 class="card-title ms-2 mt-1 mb-4 fw-bold text-muted">Item List</h2>
+
+        <div class="form-inline justify-content-center mb-4" th:object="${itemSearchDTO}">
+            <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
+                <option value="all">Total</option>
+                <option value="1d">1 day</option>
+                <option value="1w">1 week</option>
+                <option value="1m">1 month</option>
+                <option value="6m">6 months</option>
+            </select>
+
+            <select th:field="*{searchSellStatus}" class="form-control" style="width:auto;">
+                <option value="">SELL STATUS(ALL)</option>
+                <option value="SELL">SELL</option>
+                <option value="SOLD_OUT">SOLD OUT</option>
+            </select>
+
+            <select th:field="*{searchBy}" class="form-control" style="width:auto;">
+                <option value="itemNm">Product Name</option>
+                <option value="createdBy">Writer</option>
+            </select>
+
+            <input th:field="*{searchQuery}" type="text" class="form-control w-25"
+                   placeholder="Please enter a search word">
+
+            <button id="searchBtn" type="submit" class="btn btn-dark ms-2">Search</button>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Sell Status</th>
+                <th scope="col">Writer</th>
+                <th scope="col">Date</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="item, status: ${items.getContent()}">
+                <th scope="col">[[${item.id}]]</th>
+                <td>
+                    <a th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
+                </td>
+                <td th:text="${item.itemSellStatus.toString()}"></td>
+                <td th:text="${item.createdBy}"></td>
+                <td>[[${#temporals.format(item.regDate, 'yyyy-MM-dd')}]]</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <!-- 페이지 번호의 시작점(start)과 끝점(end)을 계산하여 페이지 번호를 동적으로 생성 -->
+        <div th:with="start=${(items.number/maxPage) * maxPage + 1},
+            end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ?
+                start + (maxPage - 1) : items.totalPages)})">
+
+            <ul class="pagination justify-content-center">
+
+                <!-- “Previous” 버튼을 생성 -->
+                <li class="page-item" th:classappend="${items.first}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${items.number - 1} + ')'"
+                       aria-label='Previous' class="page-link">
+                        <span aria-hidden='true'>Prev</span>
+                    </a>
+                </li>
+
+                <th:block th:each="i: ${#numbers.sequence(start, end)}">
+                    <li th:class="${items.number == i} ? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                    </li>
+                </th:block>
+
+                <li class="page-item" th:classappend="${items.last}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'"
+                       aria-label='Next' class="page-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

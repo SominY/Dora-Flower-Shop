@@ -4,10 +4,17 @@
       layout:decorate="~{layouts/layout1}">
 
 <head>
-
+    <meta charset="UTF-8">
     <title>Register Item</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/itemForm.js"></script>
+
     <style>
+        form {
+            padding: 50px 200px;
+        }
+
         .fieldError {
             color: darkseagreen;
             font-weight: bold;
@@ -73,10 +80,10 @@
         <div th:if="${#lists.isEmpty(itemFormDTO.itemImgDTOList)}">
             <div class="form-group mb-3" th:each="num: ${#numbers.sequence(1,5)}">
                 <div class="input-group img-div w-75">
-                    <label class="input-group-text custom-file-label fw-bold"
+                    <label class="input-group-text fw-bold"
                            th:text="Item_0 + ${num}"
-                           for="inputGroupFile_${num}"></label>
-                    <input type="file" class="form-control custom-file-input" id="inputGroupFile_${num}"
+                           for="inputGroupFile"></label>
+                    <input type="file" class="form-control" id="inputGroupFile"
                            name="itemImgFiles" style="color: gainsboro;">
                 </div>
             </div>
@@ -93,6 +100,5 @@
 
 </div>
 
-<script th:inline="javascript" src="/js/itemForm.js"></script>
 </body>
 </html>

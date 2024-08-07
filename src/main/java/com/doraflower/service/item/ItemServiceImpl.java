@@ -2,12 +2,16 @@ package com.doraflower.service.item;
 
 import com.doraflower.dto.ItemFormDTO;
 import com.doraflower.dto.ItemImgDTO;
+import com.doraflower.dto.ItemSearchDTO;
+import com.doraflower.dto.MainItemDTO;
 import com.doraflower.entity.Item;
 import com.doraflower.entity.ItemImg;
 import com.doraflower.repository.ItemImgRepository;
 import com.doraflower.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -94,4 +98,17 @@ public class ItemServiceImpl implements ItemService {
 
         return item.getId();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
+        return itemRepository.getAdminItemPage(itemSearchDTO, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MainItemDTO> getMainItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
+        return itemRepository.getMainItemPage(itemSearchDTO, pageable);
+    }
+
 }
